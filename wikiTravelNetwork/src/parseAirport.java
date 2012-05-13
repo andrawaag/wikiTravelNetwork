@@ -29,35 +29,35 @@ public class parseAirport {
 	 */
 	public static String parseWikiEntry(String urlAirport) throws ParserConfigurationException, SAXException, IOException{
 
-	       System.out.println("In function");
-	       org.jsoup.nodes.Document doc = Jsoup.connect(urlAirport).get();
-	       String title = doc.title();
-	       Elements tables = doc.select("table");
-	       for (Element table : tables){
-	    	   int correctTable = -1;
-	    	   Elements records = table.select("tr");
-	    	   for (Element record : records){
-	    		   Elements fields = record.children();
-	    		   if (((fields.get(0).nodeName().equals("th")) && (fields.get(0).text().equals("Airlines")))){
-	    			   correctTable = 0;
-	    		   }
-	    		   if (correctTable == 0) {
-	    		   
-	    		   for (String destination : fields.get(1).text().split(",")){
-	    			   System.out.println(fields.get(0).text() + ": Amsterdam -- "+ destination); 
-	    		   }
-	    			   
-	    		   }
-	    	   }
-	       }
+		System.out.println("In function");
+		org.jsoup.nodes.Document doc = Jsoup.connect(urlAirport).get();
+		String title = doc.title();
+		Elements tables = doc.select("table");
+		for (Element table : tables){
+			int correctTable = -1;
+			Elements records = table.select("tr");
+			for (Element record : records){
+				Elements fields = record.children();
+				if (((fields.get(0).nodeName().equals("th")) && (fields.get(0).text().equals("Airlines")))){
+					correctTable = 0;
+				}
+				if (correctTable == 0) {
+
+					for (String destination : fields.get(1).text().split(",")){
+						System.out.println(fields.get(0).text() + ": Amsterdam -- "+ destination); 
+					}
+
+				}
+			}
+		}
 		return null;
 	}
-	
+
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 		// TODO Auto-generated method stub
-       String urlAirport = "http://en.wikipedia.org/wiki/Amsterdam_Airport_Schiphol";
-       System.out.println("Start");
-       parseWikiEntry(urlAirport);
+		String urlAirport = "http://en.wikipedia.org/wiki/Amsterdam_Airport_Schiphol";
+		System.out.println("Start");
+		parseWikiEntry(urlAirport);
 	}
 
 }
